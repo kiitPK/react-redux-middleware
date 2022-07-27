@@ -4,20 +4,28 @@ import { fetchPoswts } from "./actions";
 
 const Posts = () => {
   const dispatch = useDispatch();
-  const post = useSelector((state) => state);
+  const state = useSelector((state) => state);
 
   useEffect(() => {
     console.log("called");
     dispatch(fetchPoswts());
     console.log("called1");
   }, []);
-  return (
-    <div>
-      {post.map((el) => {
-        return <h3>{el.title}</h3>;
-      })}
-    </div>
-  );
+
+  const renderPosts = () => {
+    console.log(JSON.stringify(state));
+    if (state.loading) {
+      return <h1>Loading</h1>;
+    }
+    if (state.error) {
+      return <h1>error</h1>;
+    }
+    return state.items.map((el) => {
+      return <h3>{el.title}</h3>;
+    });
+  };
+
+  return <div>{renderPosts()}</div>;
 };
 
 export default Posts;

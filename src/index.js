@@ -5,8 +5,13 @@ import { applyMiddleware, createStore } from "redux";
 import App from "./App";
 import postReducers from "./reducer";
 import thunk from "redux-thunk";
+import logger from "redux-logger";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(postReducers, applyMiddleware(thunk));
+const store = createStore(
+  postReducers,
+  composeWithDevTools(applyMiddleware(thunk, logger))
+);
 
 ReactDOM.render(
   <Provider store={store}>
